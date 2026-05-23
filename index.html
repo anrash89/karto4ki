@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивные Детские Карточки</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="branding">
+                <h1>Детский Планшет</h1>
+                <p>Интерактивный каталог обучающих карточек</p>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Поиск карточки или слова...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="categories-wrapper">
+            <nav class="categories-bar" id="categoriesBar"></nav>
+        </div>
+    </header>
+
+    <main class="gallery-container">
+        <div class="stats-counter" id="statsCounter">Показано карточек: 0</div>
+        <div class="cards-grid" id="cardsGrid"></div>
+    </main>
+
+    <!-- Модальное окно для зума и озвучки -->
+    <div class="modal-overlay" id="cardModal">
+        <div class="modal-box">
+            <button class="modal-close-btn" id="closeModalBtn">&times;</button>
+            <div class="modal-card-container" id="modalCardRender"></div>
+            <div class="modal-actions">
+                <button class="audio-play-btn" id="modalAudioBtn">
+                    <span class="sound-icon">🔊</span> СЛУШАТЬ ЗВУК
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
