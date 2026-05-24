@@ -19,7 +19,7 @@ const categoriesConfig = {
 
 // 2. Обновленная база данных (ровно 225 слов)
 const rawWordsData = {
-    "Животные": ["Кошка", "Собака", "Корова", "Лошадь", "Свинья", "Овца", "Коза", "Белка", "Лиса", "Волк", "Медведь", "Заяц", "Ёж", "Лось", "Олень", "Тигр", "Лев", "Жираф", "Слон", "Бабочка", "Муравей", "Пчела", "Жук", "Стрекоза"],
+    "Животные": ["Кошка", "Собака", "Корова", "Лошадь", "Свинья", "Овца", "Коза", "Кролик", "Белка", "Лиса", "Волк", "Медведь", "Заяц", "Ёж", "Лось", "Олень", "Тигр", "Лев", "Жираф", "Слон", "Бабочка", "Муравей", "Пчела", "Жук", "Стрекоза"],
     "Транспорт": ["Машина", "Автобус", "Троллейбус", "Трамвай", "Велосипед", "Мотоцикл", "Грузовик", "Поезд", "Самолет", "Вертолет", "Корабль", "Лодка", "Самокат", "Мотоцикл", "Пожарная машина", "Скорая помощь", "Полицейская машина", "Трактор"],
     "Предметы": ["Стул", "Стол", "Кровать", "Шкаф", "Лампа", "Зеркало", "Часы", "Мяч", "Книга", "Ручка", "Карандаш", "Ложка", "Вилка", "Тарелка", "Ведро", "Сумка", "Игрушка", "Зубная щетка", "Мыло", "Расчестка"],
     "Еда": ["Хлеб", "Сыр", "Масло", "Колбаса", "Каша", "Суп", "Салат", "Яйцо", "Йогурт", "Печенье", "Торт", "Конфета", "Мороженое", "Бутерброд", "Молоко", "Блины", "Макароны", "Вода"],
@@ -110,19 +110,18 @@ window.selectCategory = function(categoryName) {
 };
 
 function buildCardHTML(card, isInsideModal = false) {
-    const defaultEmoji = card.config.emoji || "📦";
+    // Эмодзи заглушки удалены из отображения карточки в сетке
     const onClickAttr = !isInsideModal ? `onclick="openCardPreview(${card.id})"` : '';
 
     return `
-        <div class="card" style="background-color: ${card.config.color};" ${onClickAttr}>
+        <div class="card" ${onClickAttr}>
             <div class="card-top">
                 <span class="card-tag">${card.category}</span>
                 <span class="card-index">${card.localNumber}</span>
             </div>
             <div class="card-word">${card.word}</div>
             <div class="card-image-box">
-                <img class="card-real-img" src="${card.imageSrc}" alt="${card.word}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <div class="card-placeholder-emoji" style="display: none;">${defaultEmoji}</div>
+                <img class="card-real-img" src="${card.imageSrc}" alt="${card.word}" onerror="this.style.display='none';">
             </div>
         </div>
     `;
