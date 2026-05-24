@@ -3,7 +3,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* Отключаем подсвечивание тапов на мобильных устройствах */
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -13,19 +12,22 @@
     --text-primary: #1e293b;
     --text-muted: #64748b;
     
-    /* Пастельные цвета категорий */
+    /* Пастельные цвета категорий (Hex для модального окна) */
     --cat-animals: #bbf7d0;
     --cat-transport: #bae6fd;
     --cat-items: #e9d5ff;
     --cat-food: #fef08a;
     --cat-fruits: #fed7aa;
-    --cat-vegetables: #bbf7d0;
+    --cat-vegetables: #cfeebe;
     --cat-clothes: #fbcfe8;
     --cat-nature: #ccfbf1;
     --cat-family: #ffedd5;
     --cat-professions: #e2e8f0;
     --cat-colors: #fecdd3;
     --cat-shapes: #fde047;
+    --cat-body_parts: #ffe4e6;
+    --cat-musical_instruments: #ddd6fe;
+    --cat-actions: #fed7aa;
 }
 
 body {
@@ -33,7 +35,6 @@ body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     overflow-y: scroll;
-    /* Запрещаем случайное выделение элементов приложении */
     -webkit-user-select: none;
     user-select: none;
 }
@@ -122,13 +123,12 @@ body {
     gap: 8px;
     overflow-x: auto;
     padding-bottom: 8px;
-    /* Плавный скролл на iOS */
     -webkit-overflow-scrolling: touch; 
-    scrollbar-width: none; /* Прячем дефолтный скроллбар */
+    scrollbar-width: none; 
 }
 
 .categories-bar::-webkit-scrollbar {
-    display: none; /* Прячем скроллбар в Chrome/Safari */
+    display: none; 
 }
 
 .category-btn {
@@ -143,7 +143,7 @@ body {
     color: #475569;
     white-space: nowrap;
     transition: all 0.2s ease;
-    min-height: 38px; /* Удобно для тапа пальцем */
+    min-height: 38px; 
 }
 
 .category-btn.active {
@@ -166,7 +166,7 @@ body {
     padding-left: 4px;
 }
 
-/* Адаптивная сетка: авто-подбор колонок */
+/* Адаптивная сетка */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
@@ -187,94 +187,38 @@ body {
     }
 }
 
-/* Стилизация детской карточки */
+/* Стилизация детской карточки ГЛОБАЛЬНО (упрощена) */
 .card {
     border-radius: 20px;
-    padding: 12px;
+    /* Убраны паддинг и фон, чтобы оставить только изображение */
     aspect-ratio: 3 / 4;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: block; /* Изменено с flex для чистого отображения изображения */
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
     cursor: pointer;
     overflow: hidden;
-    /* Защита от долгого нажатия на смартфонах */
     -webkit-touch-callout: none; 
 }
 
-/* Имитация бокового штрихкода (чуть уже для мобильных) */
+/* Штрихкод удален глобально, так как он есть на реальных изображениях */
 .card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    bottom: 8%;
-    width: 8px;
-    background: repeating-linear-gradient(
-        0deg,
-        #1e293b,
-        #1e293b 3px,
-        transparent 3px,
-        transparent 6px
-    );
-    opacity: 0.8;
+    display: none;
 }
 
-/* Шапка карточки */
-.card-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
-}
-
-.card-tag {
-    background-color: #ffffff;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-weight: 800;
-    font-size: 9px;
-    text-transform: uppercase;
-    color: #1e293b;
-}
-
-.card-index {
-    position: absolute;
-    right: 0;
-    font-weight: 800;
-    font-size: 13px;
-    color: rgba(30, 41, 59, 0.3);
-}
-
-/* Название карточки */
+/* Глобально скрываем предустановленные рамки и текст дублирования */
+.card-top,
 .card-word {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 900;
-    color: #1e293b;
-    margin: 4px 0;
-    word-wrap: break-word;
+    display: none;
 }
 
-@media (min-width: 480px) {
-    .card-word {
-        font-size: 24px;
-    }
-}
-
-/* Белое внутреннее поле под картинку */
+/* Белое внутреннее поле под картинку (Упрощено глобально) */
 .card-image-box {
-    background-color: #ffffff;
-    border-radius: 14px;
-    flex-grow: 1;
-    margin-left: 6px;
+    /* Убраны фон, паддинг, маргин и рамка */
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
-    overflow: hidden;
 }
 
 .card-real-img {
@@ -283,14 +227,9 @@ body {
     object-fit: contain;
 }
 
+/* Эмодзи заглушки удалены из глобального отображения */
 .card-placeholder-emoji {
-    font-size: 40px;
-}
-
-@media (min-width: 480px) {
-    .card-placeholder-emoji {
-        font-size: 55px;
-    }
+    display: none;
 }
 
 /* Модальное окно просмотра (Pop-up Зум) */
@@ -323,7 +262,7 @@ body {
     padding: 16px;
     position: relative;
     width: 100%;
-    max-width: 340px;
+    max-width: 340px; 
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     transform: scale(0.9);
     transition: transform 0.2s ease;
@@ -352,6 +291,102 @@ body {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 15px;
+}
+
+/* Модальное окно: восстанавливаем рамку, текст дублирования и паддинг */
+.modal-box .card {
+    padding: 16px;
+    background-color: #ffffff; /* Белый фон модального окна */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: none; /* Shadow уже на `.modal-box` */
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+}
+
+/* Модальное окно: восстанавливаем штрихкод */
+.modal-box .card::before {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    bottom: 8%;
+    width: 8px;
+    background: repeating-linear-gradient(
+        0deg,
+        #1e293b,
+        #1e293b 3px,
+        transparent 3px,
+        transparent 6px
+    );
+    opacity: 0.8;
+}
+
+/* Модальное окно: восстанавливаем и стилизуем заголовок */
+.modal-box .card-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.modal-box .card-tag {
+    background-color: #ffffff;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 9px;
+    text-transform: uppercase;
+    color: #1e293b;
+}
+
+.modal-box .card-index {
+    position: absolute;
+    right: 0;
+    font-weight: 800;
+    font-size: 13px;
+    color: rgba(30, 41, 59, 0.3);
+}
+
+/* Модальное окно: восстанавливаем и стилизуем текст слова */
+.modal-box .card-word {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: #1e293b;
+    margin: 4px 0;
+    word-wrap: break-word;
+}
+
+@media (min-width: 480px) {
+    .modal-box .card-word {
+        font-size: 24px;
+    }
+}
+
+/* Модальное окно: восстанавливаем внутреннее поле */
+.modal-box .card-image-box {
+    background-color: #ffffff;
+    border-radius: 14px;
+    flex-grow: 1;
+    margin-left: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.01);
+}
+
+.modal-box .card-real-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 /* Большая кнопка звука */
