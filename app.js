@@ -9,6 +9,7 @@ const categoriesConfig = {
     "Одежда": { slug: "clothes", color: "#fbcfe8", emoji: "👕" },
     "Природа": { slug: "nature", color: "#ccfbf1", emoji: "☀️" },
     "Семья": { slug: "family", color: "#ffedd5", emoji: "🏠" },
+    "Фигуры": { slug: "figures", color: "#ffedd5", emoji: "=" },
     "Профессии": { slug: "professions", color: "#e2e8f0", emoji: "🧑‍⚕️" },
     "Цвета": { slug: "colors", color: "#fecdd3", emoji: "🎨" },
     "Фигуры": { slug: "shapes", color: "#fde047", emoji: "📐" },
