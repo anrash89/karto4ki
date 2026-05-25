@@ -1,24 +1,23 @@
-// 1. Конфигурация категорий (слаги для папок, HEX-цвета и эмодзи-заглушки)
+// 1. Конфигурация категорий (слаги для папок)
 const categoriesConfig = {
-    "Животные": { slug: "animals", color: "#bbf7d0", emoji: "🐱" },
-    "Транспорт": { slug: "transport", color: "#bae6fd", emoji: "🚗" },
-    "Предметы": { slug: "items", color: "#e9d5ff", emoji: "🧸" },
-    "Еда": { slug: "food", color: "#fef08a", emoji: "🍎" },
-    "Фрукты": { slug: "fruits", color: "#fed7aa", emoji: "🍌" },
-    "Овощи": { slug: "vegetables", color: "#cfeebe", emoji: "🥦" },
-    "Одежда": { slug: "clothes", color: "#fbcfe8", emoji: "👕" },
-    "Природа": { slug: "nature", color: "#ccfbf1", emoji: "☀️" },
-    "Семья": { slug: "family", color: "#ffedd5", emoji: "🏠" },
-    "Фигуры": { slug: "figures", color: "#ffedd5", emoji: "=" },
-    "Профессии": { slug: "professions", color: "#e2e8f0", emoji: "🧑‍⚕️" },
-    "Цвета": { slug: "colors", color: "#fecdd3", emoji: "🎨" },
-    "Фигуры": { slug: "shapes", color: "#fde047", emoji: "📐" },
-    "Части тела": { slug: "body_parts", color: "#ffe4e6", emoji: "🧑" },
-    "Музыкальные инструменты": { slug: "musical_instruments", color: "#ddd6fe", emoji: "🎵" },
-    "Действия": { slug: "actions", color: "#fed7aa", emoji: "🏃" }
+    "Животные": { slug: "animals" },
+    "Транспорт": { slug: "transport" },
+    "Предметы": { slug: "items" },
+    "Еда": { slug: "food" },
+    "Фрукты": { slug: "fruits" },
+    "Овощи": { slug: "vegetables" },
+    "Одежда": { slug: "clothes" },
+    "Природа": { slug: "nature" },
+    "Семья": { slug: "family" },
+    "Профессии": { slug: "professions" },
+    "Цвета": { slug: "colors" },
+    "Фигуры": { slug: "shapes" },
+    "Части тела": { slug: "body_parts" },
+    "Музыкальные инструменты": { slug: "musical_instruments" },
+    "Действия": { slug: "actions" }
 };
 
-// 2. Обновленная база данных (ровно 225 слов)
+// 2. База данных (224 слова — Собака первая, Кошка последняя в Животных)
 const rawWordsData = {
     "Животные": ["Собака", "Корова", "Лошадь", "Свинья", "Овца", "Коза", "Белка", "Лиса", "Волк", "Медведь", "Заяц", "Ёж", "Лось", "Олень", "Тигр", "Лев", "Жираф", "Слон", "Бабочка", "Муравей", "Пчела", "Жук", "Стрекоза", "Кошка"],
     "Транспорт": ["Машина", "Автобус", "Троллейбус", "Трамвай", "Велосипед", "Мотоцикл", "Грузовик", "Поезд", "Самолет", "Вертолет", "Корабль", "Лодка", "Самокат", "Мотоцикл", "Пожарная машина", "Скорая помощь", "Полицейская машина", "Трактор"],
@@ -37,29 +36,24 @@ const rawWordsData = {
     "Действия": ["Ест", "Загорает", "Бежит", "Танцует", "Одевается", "Плачет", "Дает", "Висит", "Сидит", "Лежит", "Поет", "Нажимает", "Спит", "Ползет"]
 };
 
-// 3. Генерация основного рабочего массива
 const cardsList = [];
 let globalIdCounter = 1;
 
 for (const [categoryName, wordsArray] of Object.entries(rawWordsData)) {
-    wordsArray.forEach((word, index) => {
-        // Очищаем пробелы по краям и заменяем внутренние пробелы на нижнее подчеркивание
+    wordsArray.forEach((word) => {
         const filename = word.trim().toLowerCase().replace(/\s+/g, "_");
         const catSlug = categoriesConfig[categoryName].slug;
         
         cardsList.push({
             id: globalIdCounter++,
-            localNumber: index + 1,
             word: word.trim(),
             category: categoryName,
-            config: categoriesConfig[categoryName],
             imageSrc: `images/${catSlug}/${filename}.png`,
             audioSrc: `audio/${catSlug}/${filename}.mp3`
         });
     });
 }
 
-// 4. Логика управления интерфейсом
 let currentCategoryFilter = "Все";
 let currentSearchText = "";
 let playingAudioInstance = null;
@@ -110,19 +104,12 @@ window.selectCategory = function(categoryName) {
     renderCards();
 };
 
-function buildCardHTML(card, isInsideModal = false) {
-    // Эмодзи заглушки удалены из отображения карточки в сетке
-    const onClickAttr = !isInsideModal ? `onclick="openCardPreview(${card.id})"` : '';
-
+function buildGridCardHTML(card) {
     return `
-        <div class="card" ${onClickAttr}>
-            <div class="card-top">
-                <span class="card-tag">${card.category}</span>
-                <span class="card-index">${card.localNumber}</span>
-            </div>
-            <div class="card-word">${card.word}</div>
-            <div class="card-image-box">
-                <img class="card-real-img" src="${card.imageSrc}" alt="${card.word}" onerror="this.style.display='none';">
+        <div class="clean-card" onclick="openCardPreview(${card.id})">
+            <img class="clean-card-img" src="${card.imageSrc}" alt="${card.word}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="clean-card-placeholder" style="display: none;">
+                <span>${card.word}</span>
             </div>
         </div>
     `;
@@ -142,14 +129,18 @@ function renderCards() {
         return;
     }
 
-    cardsGrid.innerHTML = filteredCards.map(card => buildCardHTML(card)).join("");
+    cardsGrid.innerHTML = filteredCards.map(card => buildGridCardHTML(card)).join("");
 }
 
 window.openCardPreview = function(id) {
     const targetCard = cardsList.find(c => c.id === id);
     if (!targetCard) return;
 
-    modalCardRender.innerHTML = buildCardHTML(targetCard, true);
+    modalCardRender.innerHTML = `
+        <div class="modal-clean-preview">
+            <img src="${targetCard.imageSrc}" alt="${targetCard.word}" style="width:100%; height:100%; object-fit:contain;">
+        </div>
+    `;
     cardModal.classList.add("active");
 
     modalAudioBtn.onclick = () => triggerAudioPlayback(targetCard.audioSrc);
@@ -169,7 +160,7 @@ function triggerAudioPlayback(srcPath) {
     }
     playingAudioInstance = new Audio(srcPath);
     playingAudioInstance.play().catch(error => {
-        console.warn("Файл звука отсутствует или заблокирован:", srcPath);
+        console.warn("Файл звука отсутствует:", srcPath);
     });
 }
 
