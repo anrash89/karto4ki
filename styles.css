@@ -1,4 +1,3 @@
-/* Глобальные стили и обнуление */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,23 +10,6 @@
     --bg-main: #f8fafc;
     --text-primary: #1e293b;
     --text-muted: #64748b;
-    
-    /* Пастельные цвета категорий (Hex для модального окна) */
-    --cat-animals: #bbf7d0;
-    --cat-transport: #bae6fd;
-    --cat-items: #e9d5ff;
-    --cat-food: #fef08a;
-    --cat-fruits: #fed7aa;
-    --cat-vegetables: #cfeebe;
-    --cat-clothes: #fbcfe8;
-    --cat-nature: #ccfbf1;
-    --cat-family: #ffedd5;
-    --cat-professions: #e2e8f0;
-    --cat-colors: #fecdd3;
-    --cat-shapes: #fde047;
-    --cat-body_parts: #ffe4e6;
-    --cat-musical_instruments: #ddd6fe;
-    --cat-actions: #fed7aa;
 }
 
 body {
@@ -50,7 +32,7 @@ body {
 }
 
 .header-content {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -72,7 +54,6 @@ body {
     font-weight: 600;
 }
 
-/* Поиск */
 .search-container {
     position: relative;
     width: 100%;
@@ -93,7 +74,6 @@ body {
     font-size: 15px;
     font-weight: 600;
     outline: none;
-    transition: all 0.2s ease;
 }
 
 .search-container input:focus {
@@ -109,9 +89,8 @@ body {
     opacity: 0.5;
 }
 
-/* Горизонтальная лента категорий для свайпов */
 .categories-wrapper {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 10px auto 0 auto;
     border-top: 1px solid #f1f5f9;
     padding-top: 8px;
@@ -142,7 +121,6 @@ body {
     background-color: #f1f5f9;
     color: #475569;
     white-space: nowrap;
-    transition: all 0.2s ease;
     min-height: 38px; 
 }
 
@@ -151,9 +129,9 @@ body {
     color: #ffffff;
 }
 
-/* Главный каталог */
+/* Сетка каталога с фиксацией размеров */
 .gallery-container {
-    max-width: 1400px;
+    max-width: 1200px; /* Ограничиваем ширину, чтобы на ультрашироких мониторах карты не раздувало */
     margin: 15px auto;
     padding: 0 12px;
 }
@@ -166,80 +144,76 @@ body {
     padding-left: 4px;
 }
 
-/* Адаптивная сетка */
+/* Компактная адаптивная сетка */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 12px;
 }
 
 @media (min-width: 480px) {
     .cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 14px;
     }
 }
 
 @media (min-width: 1024px) {
     .cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* Оптимальный размер для ПК */
+        gap: 18px;
     }
 }
 
-/* Стилизация детской карточки ГЛОБАЛЬНО (упрощена) */
-.card {
-    border-radius: 20px;
-    /* Убраны паддинг и фон, чтобы оставить только изображение */
-    aspect-ratio: 3 / 4;
-    display: block; /* Изменено с flex для чистого отображения изображения */
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-    cursor: pointer;
-    overflow: hidden;
-    -webkit-touch-callout: none; 
-}
-
-/* Штрихкод удален глобально, так как он есть на реальных изображениях */
-.card::before {
-    display: none;
-}
-
-/* Глобально скрываем предустановленные рамки и текст дублирования */
-.card-top,
-.card-word {
-    display: none;
-}
-
-/* Белое внутреннее поле под картинку (Упрощено глобально) */
-.card-image-box {
-    /* Убраны фон, паддинг, маргин и рамка */
+/* Чистая карточка */
+.clean-card {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: transparent; /* Убрали белый фон подложки */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.card-real-img {
-    max-width: 100%;
-    max-height: 100%;
+.clean-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.clean-card-img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
-/* Эмодзи заглушки удалены из глобального отображения */
-.card-placeholder-emoji {
-    display: none;
+/* Заглушка, если файла еще нет */
+.clean-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e8f0;
+    color: #94a3b8;
+    font-weight: 800;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 16px;
+    padding: 10px;
 }
 
-/* Модальное окно просмотра (Pop-up Зум) */
+/* Модальное окно (Попап) */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(15, 23, 42, 0.7);
+    background-color: rgba(15, 23, 42, 0.75);
     backdrop-filter: blur(4px);
     z-index: 1000;
     display: flex;
@@ -258,12 +232,12 @@ body {
 
 .modal-box {
     background-color: #ffffff;
-    border-radius: 28px;
+    border-radius: 24px;
     padding: 16px;
     position: relative;
     width: 100%;
     max-width: 340px; 
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     transform: scale(0.9);
     transition: transform 0.2s ease;
     display: flex;
@@ -277,8 +251,8 @@ body {
 
 .modal-close-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 8px;
+    right: 14px;
     background: none;
     border: none;
     font-size: 32px;
@@ -289,109 +263,17 @@ body {
 
 .modal-card-container {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 15px;
 }
 
-/* Модальное окно: восстанавливаем рамку, текст дублирования и паддинг */
-.modal-box .card {
-    padding: 16px;
-    background-color: #ffffff; /* Белый фон модального окна */
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: none; /* Shadow уже на `.modal-box` */
+.modal-clean-preview {
+    width: 100%;
     aspect-ratio: 3 / 4;
-    overflow: hidden;
-}
-
-/* Модальное окно: восстанавливаем штрихкод */
-.modal-box .card::before {
-    display: block;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    bottom: 8%;
-    width: 8px;
-    background: repeating-linear-gradient(
-        0deg,
-        #1e293b,
-        #1e293b 3px,
-        transparent 3px,
-        transparent 6px
-    );
-    opacity: 0.8;
-}
-
-/* Модальное окно: восстанавливаем и стилизуем заголовок */
-.modal-box .card-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
-}
-
-.modal-box .card-tag {
-    background-color: #ffffff;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-weight: 800;
-    font-size: 9px;
-    text-transform: uppercase;
-    color: #1e293b;
-}
-
-.modal-box .card-index {
-    position: absolute;
-    right: 0;
-    font-weight: 800;
-    font-size: 13px;
-    color: rgba(30, 41, 59, 0.3);
-}
-
-/* Модальное окно: восстанавливаем и стилизуем текст слова */
-.modal-box .card-word {
-    display: block;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 900;
-    color: #1e293b;
-    margin: 4px 0;
-    word-wrap: break-word;
-}
-
-@media (min-width: 480px) {
-    .modal-box .card-word {
-        font-size: 24px;
-    }
-}
-
-/* Модальное окно: восстанавливаем внутреннее поле */
-.modal-box .card-image-box {
-    background-color: #ffffff;
-    border-radius: 14px;
-    flex-grow: 1;
-    margin-left: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.01);
-}
-
-.modal-box .card-real-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-/* Большая кнопка звука */
-.modal-actions {
-    width: 100%;
+    background-color: #ffffff;
 }
 
 .audio-play-btn {
